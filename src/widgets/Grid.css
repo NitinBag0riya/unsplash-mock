@@ -1,0 +1,12 @@
+.grid-wrapper {
+    padding: 10px;
+    background: var(--cl-offwhite);
+    border-radius: 2px;
+
+}
+
+.responsive-image{
+    width: 100%;
+    cursor: zoom-in;
+}
+

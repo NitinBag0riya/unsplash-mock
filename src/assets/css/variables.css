@@ -1,0 +1,16 @@
+:root {
+    --col-1 : 1;
+    --col-2 : 2;
+    --col-3 : 3;
+    --col-4 : 4;
+
+    /* color  */
+    --cl-offwhite: #f1f1f1;
+    --cl-white: #ffffff;
+    --cl-black: #000000;
+
+
+    --column-gutter: 24px;
+    --columns: 3;
+    --row-gutter: 24px;
+}

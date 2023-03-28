@@ -1,0 +1,10 @@
+.picture-container {
+    width: 200px;
+    background: #0b0b0b59;
+    position: absolute;
+    padding: 3px 10px;
+    border-radius: 5px;
+    color: white;
+    top: 5px;
+    right: 5px;
+}
