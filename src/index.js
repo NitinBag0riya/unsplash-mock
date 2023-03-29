@@ -11,9 +11,11 @@ import { ErrorBoundries } from 'components';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(
-  <ErrorBoundries fallback='⚠️ Some Error Occured'>
-    <StoreProvider store={store}>
-      <Home />
-  </StoreProvider>
-  </ErrorBoundries>
+  <React.StrictMode>
+    <ErrorBoundries fallback='⚠️ Some Error Occured'>
+      <StoreProvider store={store}>
+        <Home />
+    </StoreProvider>
+    </ErrorBoundries>
+  </React.StrictMode>
 );
