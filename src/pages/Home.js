@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect, useRef, useState } from "react";
+import { lazy, Suspense,  useEffect, useRef, useState } from "react";
 import { useStoreActions, useStoreState } from 'easy-peasy';
 
 import { Footer, Header } from "components";
@@ -14,6 +14,7 @@ function Home() {
   const [ currentPage, setCurrentPage ] = useState(1);
   const [ apiError, setApiError ] = useState({ status : false, message : null });
 
+  const observedElements = new Set();
 
   let containerRef = useRef(null);
 
@@ -38,7 +39,7 @@ function Home() {
 
   useEffect( () => {
     getCollection({ page : 1 });
-    setCurrentPage(currentPage+1);
+    setCurrentPage(currentPage => currentPage + 1);
   }, []);
 
 
@@ -47,14 +48,18 @@ function Home() {
     const observer = new IntersectionObserver(entries => {
       let lastItem = entries[0];
 
-      if(lastItem.intersectionRatio > 0 && Math.sign(lastItem.target.getBoundingClientRect().top) !== -1){
+      // to check that already been observed
+      if (observedElements.has(lastItem.target)) return;
+        if(lastItem.intersectionRatio > 0 && Math.sign(lastItem.target.getBoundingClientRect().top) !== -1){
           setCurrentPage(currentPage+1);
           
           getCollection(currentPage)
           
+          observedElements.add(lastItem.target);
+          
           observer.unobserve(lastItem.target); 
           observer.observe(containerRef.current.lastChild);
-      }
+        }
     }, {
       rootMargin : "300px"
     });
@@ -86,7 +91,7 @@ function Home() {
         <Grid dataset={picturesCollection} ref={containerRef} >
           <Slider />
           { apiError.status && <div className="error-cotainer">
-              <h6>{apiError.message} | <span onClick={retryGetCollectionApi}>Click Here to retry </span>
+              <h6>{apiError.message} | <span onClick={retryGetCollectionApi}>NOTE : Kindly Change API Key : Click Here to retry </span>
               </h6>
             </div>
           }

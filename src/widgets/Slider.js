@@ -9,14 +9,14 @@ import Picture from "./Picture";
 import  './Slider.css';
 const { useEffect } = require("react")
 
+const NULL_EVENT = { currentTarget: true }; // this is hack
 
-const Slider = ({ isOpen, children, ...rest }) => {
+
+const Slider = ({ children, ...rest }) => {
     var { openPortal, closePortal, isOpen, Portal } = usePortal({
         closeOnEsc : false,
         bindTo: document && document.getElementById('portal')
       });
-
-    const NULL_EVENT = { currentTarget: true }; // this is hack
 
     const { selectedImage, isOpen: isOpenSlider } = useStoreState(state => state.showSlider);
     const collection = useStoreState(state => state.picturesCollection)
@@ -30,7 +30,7 @@ const Slider = ({ isOpen, children, ...rest }) => {
         return () => {
             closePortal()
         }
-    }, [isOpenSlider])
+    }, [isOpenSlider, closePortal, openPortal])
 
     const handleClose = () => {
         handleSliderView({ isOpen : false });
