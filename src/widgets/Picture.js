@@ -32,13 +32,14 @@ Picture.propTypes = {
     placeholder: PropTypes.string,
     src: PropTypes.string.isRequired,
     priority: PropTypes.oneOf(['eager', 'lazy']),
-    alt: PropTypes.string.isRequired,
+    alt: PropTypes.string,
     styles: PropTypes.objectOf(PropTypes.string),
   };
   
   Picture.defaultProps = {
     priority: 'eager',
     styles: {},
+    alt: 'alt text...'
   };
 
 export default Picture;

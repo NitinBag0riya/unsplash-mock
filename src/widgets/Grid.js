@@ -22,6 +22,7 @@ const Grid = forwardRef(function Grid(props, ref){
                 <Masonry gutter="10px" columnsCount={3}>
                     {
                         Array.isArray(dataset) && dataset.length && dataset.map( (image, index) => {
+                            const { alt_description = 'alt desc...', id, urls : { small_s3 }, blur_hash,  } = image;
                             let width = String(image.width).substring(0, 3);
                             let height = String(image.height).substring(0, 3)
                             let color = String(image.color).substring(1);
@@ -29,13 +30,13 @@ const Grid = forwardRef(function Grid(props, ref){
                             const placeholder = `${FAKE_IMAGE_ENDPOINT}/${width}x${height}/${color}?text=🖼`;
 
                                 return (
-                                    <div ref={ref} key={image.id} className="grid-wrapper" onClick={() => handleSliderView({selectedImage : image,
+                                    <div data-id={blur_hash} ref={ref} key={id} className="grid-wrapper" onClick={() => handleSliderView({selectedImage : image,
                                         isOpen : true})}>
                                         <Picture styles={{
                                             // aspectRatio: width +"/"+ (parseInt(height)+1),
                                             width: '100%',
                                             height: '100%'
-                                        }} className="responsive-image" placeholder={placeholder} alt={image.alt_description} src={image.urls.small_s3}  />
+                                        }} className="responsive-image" placeholder={placeholder} alt={alt_description} src={small_s3} data-blur_hash={blur_hash}  />
                                     </div>
                                 )
                         }
@@ -57,7 +58,7 @@ Grid.propTypes = {
     dataset: PropTypes.arrayOf(
         PropTypes.shape({
             id: PropTypes.string.isRequired,
-            alt_description: PropTypes.string.isRequired,
+            alt_description: PropTypes.any,
             urls: PropTypes.shape({
                 small_s3: PropTypes.string.isRequired
             }).isRequired,
